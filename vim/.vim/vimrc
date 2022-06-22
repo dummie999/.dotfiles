@@ -1,0 +1,48 @@
+set number
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
+set incsearch
+set ignorecase
+
+syntax on
+
+call plug#begin()
+Plug 'rust-lang/rust.vim' "rust support
+Plug 'christoomey/vim-tmux-navigator' "zodat Ctrl-hjkl werkt in tmux
+Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsSnippetDirectories = ["/home/daan/.vim/UltiSnips"]
+"Plug 'Valloric/YouCompleteMe'
+call plug#end()
+
+set foldmethod=indent
+set foldlevelstart=10
+
+nnoremap <space> za
+"imap kj <Esc>
+
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+augroup configgroup
+    autocmd!
+    autocmd FileType haskell setlocal shiftwidth=2
+    autocmd FileType haskell setlocal softtabstop=2
+    " % is filename, %:r is filename w/o extension
+    autocmd FileType tex nmap <F2> :!pdflatex %<CR>" && evince %:r.pdf<CR>
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window " . expand("%"))
+    autocmd VimLeave * call system("tmux setw automatic-rename")
+augroup END
+
+set path=$PWD/**
+
+set exrc
