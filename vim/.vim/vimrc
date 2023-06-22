@@ -38,6 +38,7 @@ augroup configgroup
     autocmd FileType haskell setlocal softtabstop=2
     " % is filename, %:r is filename w/o extension
     autocmd FileType tex nmap <F2> :!pdflatex %<CR>" && evince %:r.pdf<CR>
+    autocmd FileType tex setlocal noautoindent nocindent nosmartindent indentexpr=
     autocmd BufEnter Makefile setlocal noexpandtab
     autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window " . expand("%"))
     autocmd VimLeave * call system("tmux setw automatic-rename")
