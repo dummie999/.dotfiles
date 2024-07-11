@@ -1,1 +1,1 @@
-sudo apt install tmux python3 git curl bc 
+sudo apt install tmux python3 git curl bc vim-gtk3
